@@ -7,12 +7,7 @@ let package = Package(
         .macOS(.v13)
     ],
     targets: [
-        .target(
-            name: "LidderCore",
-            resources: [
-                .copy("Resources/index.html")
-            ]
-        ),
+        .target(name: "LidderCore"),
         .executableTarget(
             name: "lidder",
             dependencies: ["LidderCore"]

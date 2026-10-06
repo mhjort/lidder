@@ -50,6 +50,12 @@ import Testing
         #expect(response.body == demoPage)
     }
 
+    @Test func embeddedDemoPageIsTheGame() {
+        #expect(demoPageHTML.hasPrefix("<!doctype html>"))
+        #expect(demoPageHTML.hasSuffix("</html>"))
+        #expect(demoPageHTML.contains("new EventSource('/stream')"))
+    }
+
     @Test func streamKeepsConnectionOpen() {
         #expect(route("GET /stream HTTP/1.1") == .stream)
     }

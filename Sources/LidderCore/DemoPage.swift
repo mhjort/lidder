@@ -1,3 +1,9 @@
+// The built-in demo game served at `/`. It is compiled into the binary so
+// `lidder` works after being copied anywhere, without a resource bundle.
+//
+// This is a raw string: backslashes and quotes are literal, so the HTML and
+// JavaScript can be edited as-is.
+let demoPageHTML = #"""
 <!doctype html>
 <html lang="en">
 <head>
@@ -138,3 +144,4 @@ requestAnimationFrame(loop);
 </script>
 </body>
 </html>
+"""#
