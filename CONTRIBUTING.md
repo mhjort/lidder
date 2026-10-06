@@ -25,6 +25,10 @@ The code is split into two targets:
   plus the IOKit sensor access, the poller and the network server.
 - `Sources/lidder`: `main.swift`, which wires those together into the CLI.
 
+The built-in demo game lives in `Sources/LidderCore/DemoPage.swift` as a raw
+string, so it is compiled into the binary and `lidder` keeps working after it's
+copied out of `.build`. Edit the HTML and JavaScript there as-is.
+
 The tests don't need a lid angle sensor, so they also run on CI. If your change
 touches the sensor, the CLI output or the HTTP server, please also try it on a
 real MacBook and mention the model in the pull request.

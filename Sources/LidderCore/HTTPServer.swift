@@ -16,7 +16,7 @@ public final class HTTPServer {
     public init(poller: SensorPoller, port: UInt16) {
         self.poller = poller
         self.port = NWEndpoint.Port(rawValue: port)!
-        self.demoPage = HTTPServer.loadDemoPage()
+        self.demoPage = Data(demoPageHTML.utf8)
     }
 
     public func start() throws {
@@ -84,16 +84,6 @@ public final class HTTPServer {
             }
         }
         log("client connected to /stream")
-    }
-
-    // MARK: Demo page loading
-
-    private static func loadDemoPage() -> Data {
-        if let url = Bundle.module.url(forResource: "index", withExtension: "html"),
-           let data = try? Data(contentsOf: url) {
-            return data
-        }
-        return Data("<!doctype html><h1>lidder</h1><p>Demo page not found.</p>".utf8)
     }
 }
 
