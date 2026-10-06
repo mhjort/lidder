@@ -8,15 +8,15 @@ import IOKit.hid
 /// match the Apple sensor HID device, open it, and read an 8-byte
 /// feature report (report ID 1) whose bytes[1..2] are a little-endian
 /// uint16 lid angle in degrees.
-final class LidAngleSensor {
+public final class LidAngleSensor {
 
-    enum SensorError: Error, CustomStringConvertible {
+    public enum SensorError: Error, Equatable, CustomStringConvertible {
         case deviceNotFound
         case openFailed(IOReturn)
         case readFailed(IOReturn)
         case shortReport(Int)
 
-        var description: String {
+        public var description: String {
             switch self {
             case .deviceNotFound:
                 return "Lid angle sensor not found. This requires a MacBook with a lid angle sensor (e.g. Apple Silicon, recent models). Tested working on M4; M1/M2 may not be supported."
@@ -44,7 +44,7 @@ final class LidAngleSensor {
     private var isOpen = false
     private var report = [UInt8](repeating: 0, count: reportLength)
 
-    init() throws {
+    public init() throws {
         guard let device = LidAngleSensor.findDevice() else {
             throw SensorError.deviceNotFound
         }
@@ -57,7 +57,7 @@ final class LidAngleSensor {
         }
     }
 
-    func open() throws {
+    public func open() throws {
         guard !isOpen else { return }
         let result = IOHIDDeviceOpen(device, LidAngleSensor.noOptions)
         guard result == kIOReturnSuccess else {
@@ -67,7 +67,7 @@ final class LidAngleSensor {
     }
 
     /// Reads the current lid angle in degrees.
-    func readAngle() throws -> Double {
+    public func readAngle() throws -> Double {
         var length = CFIndex(report.count)
         let result = IOHIDDeviceGetReport(
             device,
@@ -79,7 +79,13 @@ final class LidAngleSensor {
         guard result == kIOReturnSuccess else {
             throw SensorError.readFailed(result)
         }
-        guard length >= 3 else {
+        return try LidAngleSensor.decodeAngle(report, length: length)
+    }
+
+    /// Decodes a lid-angle feature report: bytes[1..2] are a little-endian
+    /// uint16 angle in degrees. `length` is the byte count the device filled.
+    static func decodeAngle(_ report: [UInt8], length: Int) throws -> Double {
+        guard length >= 3, report.count >= 3 else {
             throw SensorError.shortReport(length)
         }
         let raw = UInt16(report[2]) << 8 | UInt16(report[1])

@@ -1,5 +1,7 @@
 # lidder
 
+[![CI](https://github.com/mhjort/lidder/actions/workflows/ci.yml/badge.svg)](https://github.com/mhjort/lidder/actions/workflows/ci.yml)
+
 A small command-line tool that shows your MacBook's **lid angle** live in the terminal.
 
 It reads Apple's lid angle HID sensor directly via IOKit — the same approach as
@@ -94,6 +96,11 @@ The sensor is an Apple HID device (vendor `0x05AC`, product `0x8104`) on the
 Sensor usage page (`0x20`, usage `0x8A`). `lidder` opens it and reads an 8-byte
 feature report (report ID 1); bytes 1–2 are a little-endian `uint16` holding the
 lid angle in degrees.
+
+## Contributing
+
+Issues and pull requests are welcome. Run the tests with `swift test`, and see
+[CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## License
 
