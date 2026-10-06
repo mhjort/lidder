@@ -6,6 +6,8 @@ It reads Apple's lid angle HID sensor directly via IOKit — the same approach a
 [samhenrigold/LidAngleSensor](https://github.com/samhenrigold/LidAngleSensor),
 just as a CLI instead of a menu-bar app.
 
+![A browser game driven by the lid angle through lidder serve](docs/demo.gif)
+
 ## Requirements
 
 - macOS with a lid angle sensor (recent Apple Silicon MacBooks; tested on M4).
