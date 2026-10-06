@@ -1,0 +1,11 @@
+name: Feature request
+description: Suggest an idea for lidder
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like lidder to do?
+      description: Describe the use case. What are you trying to build or make easier?
+    validations:
+      required: true
